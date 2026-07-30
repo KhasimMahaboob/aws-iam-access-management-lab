@@ -2,143 +2,175 @@
 
 ## Project Overview
 
-This project demonstrates how AWS Identity and Access Management (IAM) is used to securely manage access to AWS resources by implementing the Principle of Least Privilege.
+This project demonstrates hands-on implementation of **AWS Identity and Access Management (IAM)** by creating users, groups, managed policies, customer managed policies, and inline policies while following the Principle of Least Privilege.
 
-Instead of using the AWS Root Account for daily operations, IAM Users, User Groups, and AWS Managed Policies were configured to simulate a real-world organization's access control.
-
----
-
-## Project Architecture
-
-Root Account
-
-├── Administrators Group
-
-* AdministratorAccess
-
-├── Developers Group
-
-* AmazonEC2FullAccess
-* AmazonS3FullAccess
-
-└── Interns Group
-
-* ReadOnlyAccess
-
-IAM Users
-
-* CloudAdmin → Administrators
-* Developer1 → Developers
-* Intern1 → Interns
+The project simulates a real-world organization where different users have different levels of access based on their job responsibilities.
 
 ---
 
-## AWS Services Used
+## Technologies Used
 
-* AWS Identity and Access Management (IAM)
-* Amazon EC2
-* Amazon S3
-
----
-
-## What I Implemented
-
-### IAM Groups
-
-* Administrators
-* Developers
-* Interns
-
-### IAM Users
-
-* CloudAdmin
-* Developer1
-* Intern1
-
-### Policies Attached
-
-Administrators
-
-* AdministratorAccess
-
-Developers
-
-* AmazonEC2FullAccess
-* AmazonS3FullAccess
-
-Interns
-
-* ReadOnlyAccess
+- Amazon Web Services (AWS)
+- AWS IAM
+- Amazon EC2
+- Amazon S3
 
 ---
 
-## Permission Testing
+# IAM Users
 
-### CloudAdmin
-
-* Full administrative access
-* Can manage IAM, EC2 and S3
-
-### Developer1
-
-* Can launch EC2 instances
-* Can create S3 buckets
-* Cannot manage IAM resources
-
-### Intern1
-
-* Can view AWS resources
-* Cannot launch EC2 instances
-* Cannot create Security Groups
-* Cannot create S3 buckets
+- CloudAdmin
+- Developer1
+- Developer2
+- Intern1
 
 ---
 
-## Real Authorization Test
+# IAM Groups
 
-When logged in as **intern1**, attempting to launch an EC2 instance failed with the following error:
-
-Action:
-ec2:CreateSecurityGroup
-
-Reason:
-No identity-based policy allows the ec2:CreateSecurityGroup action.
-
-This demonstrates how AWS evaluates IAM permissions for every API request before allowing an action.
+- Administrators
+- Developers
+- Interns
 
 ---
 
-## Key Concepts Learned
+# AWS Managed Policies Used
 
-* IAM Users
-* IAM Groups
-* AWS Managed Policies
-* Identity-Based Policies
-* Permission Inheritance
-* Principle of Least Privilege
-* Role-Based Access Control (RBAC)
-* Authorization Flow
-* Access Denied Troubleshooting
+- AdministratorAccess
+- ReadOnlyAccess
+- AmazonEC2FullAccess (initial setup)
+- AmazonS3FullAccess (initial setup)
 
 ---
 
+# Customer Managed Policies Created
+
+## DeveloperEC2StartStopPolicy
+
+Allowed:
+
+- ec2:DescribeInstances
+- ec2:StartInstances
+- ec2:StopInstances
+
+Restricted:
+
+- Launch EC2 Instances
+- Terminate EC2 Instances
 
 ---
 
-## Skills Demonstrated
+## DeveloperS3AccessPolicy
 
-* AWS IAM
-* Access Management
-* AWS Security
-* EC2 Permissions
-* S3 Permissions
-* Least Privilege Design
-* Cloud Security Fundamentals
+Allowed:
+
+- List Buckets
+- Upload Objects
+- Download Objects
+
+Restricted:
+
+- Delete Objects
+- Delete Buckets
+
+---
+
+# Inline Policy
+
+Developer1 received an additional inline policy allowing:
+
+- ec2:RebootInstances
+
+Developer2 did not receive this permission.
+
+This demonstrates user-specific permission assignment using IAM Inline Policies.
+
+---
+
+# Permission Testing
+
+## CloudAdmin
+
+- Full AWS administrative access
+
+## Developer1
+
+Allowed:
+
+- Start EC2
+- Stop EC2
+- Reboot EC2
+- Upload objects to S3
+- Download objects from S3
+
+Denied:
+
+- Launch EC2
+- Terminate EC2
+- Delete S3 Objects
+- IAM Administration
+
+## Developer2
+
+Allowed:
+
+- Start EC2
+- Stop EC2
+
+Denied:
+
+- Reboot EC2
+- Launch EC2
+- Terminate EC2
+
+## Intern1
+
+Allowed:
+
+- Read-only access
+
+Denied:
+
+- Launch EC2
+- Create S3 Buckets
+- Modify AWS Resources
+
+---
+
+# Key Concepts Learned
+
+- IAM Users
+- IAM Groups
+- AWS Managed Policies
+- Customer Managed Policies
+- Inline Policies
+- Principle of Least Privilege
+- Role-Based Access Control (RBAC)
+- Permission Evaluation
+- AWS Security Best Practices
+
+---
+
+# Project Outcome
+
+This lab demonstrates how IAM permissions can be designed, assigned, and verified using multiple AWS users while implementing secure access control following real-world cloud security practices.
+
+---
+
+## Repository Structure
+
+```
+aws-iam-access-management-lab
+│
+├── README.md
+├── screenshots
+└── policy-json
+```
 
 ---
 
 ## Author
 
-Shaik Khasim Mahaboob
+**Shaik Khasim Mahaboob**
 
-Learning Cloud Computing through hands-on AWS projects.
+Learning AWS Cloud Computing through hands-on projects.
