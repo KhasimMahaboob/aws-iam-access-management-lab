@@ -51,7 +51,8 @@ Create multiple IAM users and organize them using IAM Groups.
 - Administrators
 - Developers
 - Interns
-
+  ## Screenshots
+  ![IAM Users](IAM Users.png)
 ---
 
 # Lab 2 – AWS Managed Policies
