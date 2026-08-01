@@ -249,9 +249,8 @@ Successfully listed S3 buckets without using long-term credentials.
 ```
 aws-iam-access-management-lab/
 │
-├── README.md
-├── policy-json/
-└── Screenshots/
+├── Screenshots/
+└── README.md
 ```
 
 ---
